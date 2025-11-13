@@ -1,0 +1,151 @@
+.main {
+    position: relative;
+    min-height: 100vh;
+    background: #000;
+    overflow: hidden;
+    color: #f5f5f5;
+  }
+  
+  /* Center orb during loading */
+  .orbWrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  
+  .orbCore {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #b0e3ff 40%, #7a5cff 70%, #000 90%);
+    position: relative;
+    z-index: 2;
+  }
+  
+  .orbGlow {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(122, 92, 255, 0.9), transparent 70%);
+    filter: blur(20px);
+    z-index: 1;
+  }
+  
+  .orbRays {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background:
+      conic-gradient(
+        from 0deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(122, 92, 255, 0.7),
+        rgba(0, 255, 186, 0.6),
+        rgba(255, 255, 255, 0.05),
+        rgba(0, 0, 0, 0.9)
+      );
+    mix-blend-mode: screen;
+    filter: blur(6px);
+    opacity: 0.9;
+  }
+  
+  /* Aurora / reveal layer */
+  .auroraLayer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* This div holds the gradient that "reveals" the image */
+  .auroraGradient {
+    position: absolute;
+    inset: 0;
+    background:
+      url("/hero-image-tbd.jpg") center/cover no-repeat fixed,
+      radial-gradient(circle at 10% 0%, rgba(0, 255, 186, 0.5), transparent 55%),
+      radial-gradient(circle at 90% 10%, rgba(122, 92, 255, 0.7), transparent 55%),
+      linear-gradient(120deg, rgba(0, 0, 0, 0.7), transparent, rgba(0, 0, 0, 0.9));
+    /* Experimental: gradient waves reveal image */
+    mask-image: radial-gradient(circle at 10% 0%, white 0%, transparent 65%),
+      radial-gradient(circle at 90% 10%, white 0%, transparent 65%);
+    mask-composite: add;
+    -webkit-mask-image: radial-gradient(circle at 10% 0%, white 0%, transparent 65%),
+      radial-gradient(circle at 90% 10%, white 0%, transparent 65%);
+    -webkit-mask-composite: source-over;
+    animation: aurora-move 14s ease-in-out infinite alternate;
+  }
+  
+  @keyframes aurora-move {
+    0% {
+      transform: translate3d(-10%, 5%, 0) scale(1.05);
+    }
+    50% {
+      transform: translate3d(10%, -5%, 0) scale(1.1);
+    }
+    100% {
+      transform: translate3d(-5%, 0%, 0) scale(1.05);
+    }
+  }
+  
+  /* Text */
+  .textLayer {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 24px;
+    opacity: 0;
+  }
+  
+  .textLayer h1 {
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  
+  .textLayer p {
+    max-width: 520px;
+    margin-top: 16px;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+  
+  /* Footer */
+  .footer {
+    position: fixed;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    padding: 0 24px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #888;
+    z-index: 10;
+  }
+  
+  .footer a {
+    color: #b0e3ff;
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
+  .divider {
+    opacity: 0.5;
+  }
+  
