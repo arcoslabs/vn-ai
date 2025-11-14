@@ -4,7 +4,7 @@ import { Figtree } from "next/font/google";
 const figtree = Figtree({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "VN.AI",
+  title: "Where creativity regains value",
   description: "VN.AI – An ARCOS Labs Company",
 };
 
