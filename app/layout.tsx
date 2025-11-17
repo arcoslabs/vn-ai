@@ -7,9 +7,15 @@ export const metadata = {
   title: "Where creativity regains value",
   description: "VN.AI – An ARCOS Labs Company",
   icons: {
-    icon: "/VN-Logo-White.svg",
-    shortcut: "/VN-Logo-White.svg",
-    apple: "/VN-Logo-White.svg",
+    icon: [
+      { url: "/VN-Logo-Dark.svg", media: "(prefers-color-scheme: light)" },
+      { url: "/VN-Logo-White.svg", media: "(prefers-color-scheme: dark)" },
+    ],
+    shortcut: [
+      { url: "/VN-Logo-Dark.svg", media: "(prefers-color-scheme: light)" },
+      { url: "/VN-Logo-White.svg", media: "(prefers-color-scheme: dark)" },
+    ],
+    apple: "/VN-Logo-Dark.svg", // Default to dark for Apple devices
   },
 };
 
