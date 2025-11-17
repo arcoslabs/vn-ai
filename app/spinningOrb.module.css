@@ -17,5 +17,9 @@
     will-change: transform;
     backface-visibility: hidden;
     transform: translateZ(0);
+    border: none;
+    outline: none;
+    box-shadow: none;
+    object-fit: contain;
   }
   

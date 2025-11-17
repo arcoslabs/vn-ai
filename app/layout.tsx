@@ -6,6 +6,11 @@ const figtree = Figtree({ subsets: ["latin"] });
 export const metadata = {
   title: "Where creativity regains value",
   description: "VN.AI – An ARCOS Labs Company",
+  icons: {
+    icon: "/VN-Logo-White.svg",
+    shortcut: "/VN-Logo-White.svg",
+    apple: "/VN-Logo-White.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

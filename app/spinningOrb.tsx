@@ -1,9 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import styles from "./spinningOrb.module.css";
 
-export function SpinningOrb({ animate }: { animate: any }) {
+type AnimationControls = ReturnType<typeof useAnimation>;
+
+export function SpinningOrb({ animate }: { animate: AnimationControls }) {
   return (
     <div className={styles.orbWrapperInternal}>
       <motion.div
@@ -14,7 +16,7 @@ export function SpinningOrb({ animate }: { animate: any }) {
           willChange: "transform",
         }}
       >
-        <img src="/VN Landing Page bckg.svg" alt="orb" className={styles.orbSvg} />
+        <img src="/VN-SpinningCircle-2.svg" alt="orb" className={styles.orbSvg} />
       </motion.div>
     </div>
   );
