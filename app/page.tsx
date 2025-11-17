@@ -51,9 +51,9 @@ export default function Home() {
       
       // 1) Spin continuously, gradually slowing down
       await orbControls.start({
-        rotate: [0, 1080], // continuous rotation with gradual slowdown
+        rotate: [0, 720], // continuous rotation with gradual slowdown
         transition: {
-          duration: 3.5,
+          duration: 2.0,
           ease: [0.4, 0, 0.2, 1], // cubic-bezier for smooth gradual slowdown
           type: "tween", // use tween instead of spring for smoother animation
         },
@@ -110,6 +110,13 @@ export default function Home() {
       <motion.div className={styles.auroraLayer} animate={revealControls}>
         <canvas id="mesh-gradient-canvas" className={styles.meshGradient} />
       </motion.div>
+
+      {/* Low opacity black overlay */}
+      <motion.div 
+        className={styles.blackOverlay} 
+        animate={textControls} 
+        initial={{ opacity: 0 }}
+      />
 
       {/* Text content */}
       <motion.div 
