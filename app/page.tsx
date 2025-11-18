@@ -40,40 +40,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Orb animation: independent sequence
-    const runOrbSequence = async () => {
-      // Wait for orb to load
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // First phase: fast spin then gradual slowdown (single animation, no pause)
-      // Fast spin for ~2s, then gradual slowdown to 1080° by 4s
-      orbControls.start({
-        rotate: [0, 1080],
-        transition: {
-          duration: 4, // total 4 seconds
-          ease: [0.4, 0, 0.2, 1], // starts fast, smoothly slows down
-          type: "tween",
-          onComplete: () => {
-            // Continue with slow perpetual spin seamlessly from 1080
-            orbControls.start({
-              rotate: [1080, 1440], // continue from 1080 (one full 360° rotation)
-              transition: {
-                duration: 60, // slow rotation speed (360 degrees in 60s - very slow)
-                ease: "linear",
-                type: "tween",
-                repeat: Infinity, // perpetual slow spin
-                repeatType: "loop", // continuous loop
-              },
-            });
-          },
-        },
-      });
-    };
+    // Orb animation: slow infinite spin starting immediately
+    orbControls.start({
+      rotate: [0, 360],
+      transition: {
+        duration: 60, // slow rotation speed (360 degrees in 60s - very slow)
+        ease: "linear",
+        type: "tween",
+        repeat: Infinity, // perpetual slow spin
+        repeatType: "loop", // continuous loop
+      },
+    });
 
-    // Text/overlay animation: independent sequence (starts 3s after page load)
+    // Text/overlay animation: starts 1 second after page load
     const runTextSequence = async () => {
-      // Wait 3 seconds after page load
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      // Wait 1 second after page load
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Fade in text and overlay simultaneously
       await Promise.all([
@@ -95,8 +77,6 @@ export default function Home() {
       ]);
     };
 
-    // Run both sequences independently
-    runOrbSequence();
     runTextSequence();
   }, [orbControls, revealControls, textControls]);
 
