@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #010101;
+  --foreground: #ededed;
+  
+  /* Brand Colors */
+  --color-blue: #042EFF;
+  --color-purple: #8F12EE;
+  --color-pink: #FF35DA;
+  --color-red: #F55C5C;
+  --color-yellow: #FFDA55;
 }
 
 @theme inline {
@@ -12,15 +19,152 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  font-family: var(--font-body);
+  background-color: #010101;
+  color: #ededed;
+  overflow-x: hidden;
+}
+
+/* Input placeholder styling for dark mode */
+input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-header);
+}
+
+.font-mono-brand {
+  font-family: var(--font-mono);
+}
+
+/* Spatial Gradients */
+.gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.blob-blue { 
+  background: var(--color-blue);
+  animation: float-blue 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.blob-pink { 
+  background: var(--color-pink);
+  animation: float-pink 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+.blob-yellow { 
+  background: var(--color-yellow);
+  animation: float-yellow 12s ease-in-out infinite;
+  will-change: transform;
+}
+
+.blob-purple { background: var(--color-purple); }
+
+/* Glass Effects */
+.glass-panel {
+  background: rgba(1, 1, 1, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: rgba(1, 1, 1, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
+}
+
+/* Dark Section with Aurora */
+.dark-aurora {
+  background: #010101;
+  position: relative;
+  overflow: hidden;
+}
+
+.aurora-beam {
+  background: linear-gradient(45deg, var(--color-blue), var(--color-purple), var(--color-pink));
+  filter: blur(60px);
+  opacity: 0.8;
+}
+
+@keyframes float-blue {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate(120px, -80px) scale(1.15) rotate(90deg); }
+  50% { transform: translate(-60px, -120px) scale(0.9) rotate(180deg); }
+  75% { transform: translate(80px, -40px) scale(1.08) rotate(270deg); }
+}
+
+@keyframes float-pink {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-140px, 100px) scale(1.2) rotate(120deg); }
+  66% { transform: translate(160px, 60px) scale(0.85) rotate(240deg); }
+}
+
+@keyframes float-yellow {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  20% { transform: translate(90px, -100px) scale(1.25) rotate(72deg); }
+  40% { transform: translate(-100px, -60px) scale(0.8) rotate(144deg); }
+  60% { transform: translate(130px, 80px) scale(1.15) rotate(216deg); }
+  80% { transform: translate(-50px, 120px) scale(0.9) rotate(288deg); }
+}
+
+/* Crown Card Styles */
+.crown-card {
+  z-index: 10;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
+}
+
+/* Hero Collage Responsive Positioning */
+.collage-item {
+  top: var(--mobile-top);
+}
+
+@media (min-width: 1024px) {
+  .collage-item {
+    top: var(--desktop-top);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Image Wheel Background Positioning */
+@media (max-width: 767px) {
+  .image-wheel-position {
+    right: 0 !important;
+  }
+}
+@media (min-width: 768px) {
+  .image-wheel-position {
+    right: 200px !important;
+    top: 200px !important;
+  }
+}
+
+/* Image Wheel Spin Animation */
+@keyframes spin-wheel {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.image-wheel-spin {
+  animation: spin-wheel 20s linear infinite;
+  transform-origin: 300px 300px !important;
+  will-change: transform;
 }

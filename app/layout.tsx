@@ -1,28 +1,52 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Figtree, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { Figtree } from "next/font/google";
 
-const figtree = Figtree({ subsets: ["latin"] });
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-export const metadata = {
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const figtree = Figtree({
+  variable: "--font-header",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
+const inter = Inter({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+});
+
+export const metadata: Metadata = {
   title: "Where creativity regains value",
   description: "VN.AI – An ARCOS Labs Company",
-  icons: {
-    icon: [
-      { url: "/VN-Logo-Dark.svg", media: "(prefers-color-scheme: light)" },
-      { url: "/VN-Logo-White.svg", media: "(prefers-color-scheme: dark)" },
-    ],
-    shortcut: [
-      { url: "/VN-Logo-Dark.svg", media: "(prefers-color-scheme: light)" },
-      { url: "/VN-Logo-White.svg", media: "(prefers-color-scheme: dark)" },
-    ],
-    apple: "/VN-Logo-Dark.svg", // Default to dark for Apple devices
-  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body className={figtree.className}>{children}</body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${figtree.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
