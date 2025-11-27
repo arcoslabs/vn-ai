@@ -467,15 +467,14 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Hero Gradient - Fixed background, positioned at root level */}
-      <img 
-        src="/hero-gradient.svg" 
-        alt="" 
-        className="hero-gradient-responsive"
-      />
-      
       {/* Hero Section */}
       <header id="home" className="hero-section">
+        {/* Hero Gradient - Fixed background, positioned inside hero container */}
+        <img 
+          src="/hero-gradient.svg" 
+          alt="" 
+          className="hero-gradient-responsive"
+        />
         {/* Collage items positioned on the right - Desktop only - OVERLAPS gradient */}
         <div className="hero-collage-wrapper-desktop">
           <HeroCollage />
@@ -512,7 +511,7 @@ const App = () => {
         <div className="max-w-7xl mx-auto relative z-10">
           <Reveal triggerAt="twoThirds">
             <div className="mb-20">
-              <h2 className="text-3xl lg:text-5xl leading-[1.3em] font-normal mb-6 text-white">The Complete IP Solution <br /> for the New Era of Gen AI</h2>
+              <h2 className="text-5xl text-white font-regular pb-4">The Complete IP Solution <br /> for the New Era of Gen AI</h2>
             </div>
           </Reveal>
 
@@ -521,12 +520,12 @@ const App = () => {
             {
               title: "Enforce Your Rights",
               desc: "Identify unauthorized usage with forensic proof to force settlements, win judgments, and calculate the damages you are owed for past infringement.",
-              image: "/VP1-Illo.png"
+              image: "/VP1-Illo.png?v=3"
             },
             {
               title: "Take Control of AI Training",
               desc: "We facilitate authorized licensing frameworks, ensuring models can only train on your catalog with explicit consent and compensation.",
-              image: "/VP2-Illo.png"
+              image: "/VP2-Illo.png?v=3"
             },
             {
               title: "Secure New Revenue",
@@ -576,7 +575,7 @@ const App = () => {
           }}
         >
               <div
-                className="p-20"
+                className="py-20 px-10 md:px-20"
                 style={{
                   borderRadius: '23px',
                   background: 'linear-gradient(193deg, rgba(255, 255, 255, 0.05) 10.93%, rgba(255, 255, 255, 0.15) 50.14%, rgba(255, 255, 255, 0.05) 90.1%)',
@@ -601,8 +600,8 @@ const App = () => {
                 {' '}unchecked, <span style={{ backgroundColor: 'white', color: 'black', padding: '2px 4px' }}>we risk</span> <span style={{ textDecoration: 'underline' }}>undermining</span> the very foundation of our copyright system and the <span style={{ fontWeight: 'bold' }}>livelihoods of the creators</span> it is meant to protect."
                 </h3>
                 <div className="font-mono-brand text-white">
-                  <div className="text-base font-bold tracking-widest uppercase mb-2">MARIA A. PALLANTE</div>
-                  <div className="text-xs font-normal tracking-widest uppercase leading-normal">
+                  <div className="text-base font-bold tracking-widest uppercase mb-2 md:px-0">MARIA A. PALLANTE</div>
+                  <div className="text-xs font-normal tracking-widest uppercase px-12 leading-normal">
                     President and CEO, Association of American Publishers<br></br> (Former U.S. Register of Copyrights)
                   </div>
                 </div>

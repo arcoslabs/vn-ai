@@ -81,25 +81,25 @@ body > div:first-child {
 }
 
 .hero-gradient-responsive {
-  /* MOBILE: Fixed positioning locked to viewport - scaled to 50% of original size */
-  position: fixed;
-  top: -10vh !important;
-  right: 0 !important;
-  left: auto !important;
-  bottom: auto !important;
-  width: 200vw !important;
-  height: 150vh !important;
+  /* MOBILE: Absolute positioning to scroll with hero content - scaled to 50% of original size */
+  position: absolute;
+  top: -10vh;
+  right: -1.5rem; /* Escape hero section padding, same as collage wrapper */
+  left: -1.5rem; /* Escape hero section padding on left */
+  bottom: auto;
+  width: calc(100% + 3rem); /* Full width plus padding escape */
+  height: 150vh;
   z-index: 0;
   pointer-events: none;
-  overflow: hidden !important; /* Prevent overflow beyond frame */
-  margin: 0 !important;
-  padding: 0 !important;
-  max-width: none !important; /* Constrain to viewport width */
-  max-height: 150vh !important; /* Constrain to viewport height */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  max-height: 150vh;
   
   object-fit: cover;
   object-position: top center;
-  transform: translate3d(0, 0, 0) scale(0.5) !important; /* Scale to 50% on mobile */
+  transform: translate3d(0, 0, 0) scale(0.5); /* Scale to 50% on mobile */
   transform-origin: top right; /* Scale from top right corner */
   
   /* Prevent position shifts on mobile */
@@ -108,63 +108,63 @@ body > div:first-child {
   will-change: transform;
   
   /* Mobile-specific fixes - prevent any movement */
-  -webkit-transform: translate3d(0, 0, 0) scale(0.5) !important;
-  -moz-transform: translate3d(0, 0, 0) scale(0.5) !important;
-  -ms-transform: translate3d(0, 0, 0) scale(0.5) !important;
-  
-  /* Ensure it's not affected by parent transforms or overflow */
-  contain: layout style paint;
-  
-  /* Break out of any parent containing blocks */
-  position: fixed !important;
+  -webkit-transform: translate3d(0, 0, 0) scale(0.5);
+  -moz-transform: translate3d(0, 0, 0) scale(0.5);
+  -ms-transform: translate3d(0, 0, 0) scale(0.5);
 }
 
 /* TABLET */
 @media (min-width: 768px) {
   .hero-gradient-responsive {
-    position: fixed; /* Switch to fixed on larger screens */
-    width: 100vw !important;
-    height: 100vh !important;
-    top: 0vh !important;
+    position: absolute; /* Absolute to scroll with hero content */
+    width: 100vw;
+    height: 100vh;
+    top: 0;
     right: 0;
+    left: 50%;
+    margin-left: -50vw; /* Center on viewport */
     object-position: center right;
-    transform: translate3d(0, 0, 0) scale(.75) !important; /* Reset to full size on tablet+ */
-    -webkit-transform: translate3d(0, 0, 0) scale(.75) !important;
-    -moz-transform: translate3d(0, 0, 0) scale(.75) !important;
-    -ms-transform: translate3d(0, 0, 0) scale(.75) !important;
-    overflow: visible !important; /* Reset overflow on larger screens */
+    transform: translate3d(0, 0, 0) scale(.75); /* Scale to 75% on tablet */
+    -webkit-transform: translate3d(0, 0, 0) scale(.75);
+    -moz-transform: translate3d(0, 0, 0) scale(.75);
+    -ms-transform: translate3d(0, 0, 0) scale(.75);
+    overflow: visible;
   }
 }
 
 /* LAPTOP */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .hero-gradient-responsive {
-    position: fixed;
-    height: 100vh !important;
-    width: 100vw !important;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
     top: -25vh;
     right: 0;
-    transform: translate3d(0, 0, 0) scale(1) !important; /* Reset to full size on laptop+ */
-    -webkit-transform: translate3d(0, 0, 0) scale(1) !important;
-    -moz-transform: translate3d(0, 0, 0) scale(1) !important;
-    -ms-transform: translate3d(0, 0, 0) scale(1) !important;
-    overflow: visible !important;
+    left: 50%;
+    margin-left: -50vw; /* Center on viewport */
+    transform: translate3d(0, 0, 0) scale(1); /* Full size on laptop */
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    -moz-transform: translate3d(0, 0, 0) scale(1);
+    -ms-transform: translate3d(0, 0, 0) scale(1);
+    overflow: visible;
   }
 }
 
 /* DESKTOP */
 @media (min-width: 1280px) {
   .hero-gradient-responsive {
-    position: fixed;
-    height: 100vh !important;
-    width: 100vw !important;
-    top: 0vh !important;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
     right: 0;
-    transform: translate3d(0, 0, 0) scale(1) !important; /* Reset to full size on desktop */
-    -webkit-transform: translate3d(0, 0, 0) scale(1) !important;
-    -moz-transform: translate3d(0, 0, 0) scale(1) !important;
-    -ms-transform: translate3d(0, 0, 0) scale(1) !important;
-    overflow: visible !important;
+    left: 50%;
+    margin-left: -50vw; /* Center on viewport */
+    transform: translate3d(0, 0, 0) scale(1); /* Full size on desktop */
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    -moz-transform: translate3d(0, 0, 0) scale(1);
+    -ms-transform: translate3d(0, 0, 0) scale(1);
+    overflow: visible;
   }
 }
 
