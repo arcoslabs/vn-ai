@@ -2,15 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-interface CollageItem {
-  name: string;
-  pos: {
-    left: number; // percentage
-    top: number; // percentage
-    height: number; // percentage - height is controlled, width calculated from aspect ratio
-  };
-}
-
 // Parse filename to extract dimensions and check if it's a crown
 const parseImageName = (name: string) => {
   // Format: "img-sq-[SEQUENCE]-[SUBJECT]-[WIDTH]x[HEIGHT]"
@@ -35,7 +26,6 @@ const HeroCollage = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Reveal all images at once
           setIsVisible(true);
           observer.disconnect();
         }
@@ -46,102 +36,213 @@ const HeroCollage = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Collage items with hardcoded positions based on column logic
-  // Arc moved down ~200px and made steeper
-  // Using height instead of width for better vertical arc control
-  const collageItems: CollageItem[] = [
-    // --- COLUMN 1 (Far Left, Bottom Tail) ---
-    // Approx Left: 0-10%
-    // Moved down ~200px (from 85% to 110%)
-    { name: "img-sq-1-crown-60x60", pos: { left: 5.5, top: 118, height: 8 } },
-    
-    // --- COLUMN 2 ---
-    // Approx Left: 10-20%
-    // Steeper progression
-    { name: "img-sq-2-superhero-88x88", pos: { left: 15, top: 112, height: 10 } },
-    
-    // --- COLUMN 3 ---
-    // Approx Left: 20-35%
-    // Steeper progression
-    { name: "img-sq-3-flowers-80x80", pos: { left: 26.5, top: 102.5, height: 9 } },
-    { name: "img-sq-4-geisha-80x80", pos: { left: 26.5, top: 120, height: 9 } },
-    
-    // --- COLUMN 4 ---
-    // Approx Left: 35-50%
-    // Steeper progression
-    { name: "img-sq-5-crown-80x80", pos: { left: 38.7, top: 79.5, height: 8 } },
-    { name: "img-sq-6-spacegirl-96x88", pos: { left: 36.75, top: 95, height: 9.2 } },
-    { name: "img-sq-7-lake-88x88", pos: { left: 36.75, top: 112.5, height: 10 } },
-    
-    // --- COLUMN 5 (The "Body" - Wider Cluster) ---
-    // Approx Left: 50-75%
-    // Steeper progression
-    { name: "img-sq-8-femmes-184x160", pos: { left: 48, top: -3, height: 18 } },
-    { name: "img-sq-9-planet-96x96", pos: { left: 48, top: 29, height: 10 } },
-    { name: "img-sq-10-eyes-96x96", pos: { left: 58, top: 27.5, height: 12.5 } },
-    { name: "img-sq-11-bulbs-180x144", pos: { left: 48, top: 48, height: 16.75 } },
-    { name: "img-sq-12-throne-180x160", pos: { left: 48, top: 78.5, height: 19 } },
-    { name: "img-sq-13-walrus-104x96", pos: { left: 48, top: 112.5, height: 12.5 } },
-    { name: "img-sq-14-crown-60x60", pos: { left: 62.75, top: 112.5, height: 7 } },
-    
-    // --- COLUMN 6 (The "Head" - Top Right) ---
-    // Approx Left: 75-100%
-    // Steeper progression - can go negative with overflow-visible
-    { name: "img-sq-15-crown-112x112", pos: { left: 70.5, top: -2, height: 12 } },
-    { name: "img-sq-16-desert-184x160", pos: { left: 70.5, top: 20.5, height: 19 } },
-    { name: "img-sq-17-astronaut-88x88", pos: { left: 70.5, top: 55, height: 10 } },
-    { name: "img-sq-18-crown-88x88", pos: { left: 82, top: 55, height: 10 } },
-    { name: "img-sq-19-tunnel-190x160", pos: { left: 70.5, top: 74, height: 16 } },
+  const columns = [
+    // --- THIN COLUMNS (The Tail) ---
+    {
+      id: 1,
+      pos: { left: '0px', top: '688px', width: '60px' }, // Very thin
+      items: [{ name: 'img-sq-1-crown-60x60' }]
+    },
+    {
+      id: 2,
+      pos: { left: '76px', top: '660px', width: '88px' }, // Slightly wider
+      items: [{ name: 'img-sq-2-superhero-88x88' }]
+    },
+    {
+      id: 3,
+      pos: { left: '180px', top: '600px', width: '80px' },
+      items: [
+        { name: 'img-sq-3-flowers-80x80' },
+        { name: 'img-sq-4-geisha-80x80' }
+      ]
+    },
+    {
+      id: 4,
+      pos: { left: '276px', top: '450px', width: '96px' },
+      items: [
+        { name: 'img-sq-5-crown-80x80' },
+        { name: 'img-sq-6-spacegirl-96x88' },
+        { name: 'img-sq-7-lake-88x88' }
+      ]
+    },
+
+    // --- WIDE COLUMNS (The Body & Head) ---
+    {
+      id: 5,
+      pos: { left: '388px', top: '-50px', width: '200px' }, // Big jump in size
+      items: [
+        {
+          type: 'row',
+          items: [
+            { name: 'img-sq-8-femmes-184x160', width: '90%' }
+            // Aligned to the right, leaving left side empty
+          ]
+        },
+        { 
+          type: 'row', 
+          items: [
+            { name: 'img-sq-9-planet-96x96', width: '50%' },
+            { name: 'img-sq-10-eyes-96x96', width: '50%' }
+          ]
+        },
+        { name: 'img-sq-11-bulbs-180x144' },
+        { name: 'img-sq-12-throne-180x160' },
+        { 
+          type: 'row', 
+          items: [
+            { name: 'img-sq-13-walrus-104x96', width: '70%' },
+            { name: 'img-sq-14-crown-60x60', width: '30%' }
+          ]
+        }
+      ]
+    },
+    {
+      id: 6,
+      pos: { left: '604px', top: '-60px', width: '240px' },
+      items: [
+        // Row 1: Crown (50%) + Empty Space
+        { 
+          type: 'row',
+          items: [
+            { name: 'img-sq-15-crown-112x112', width: '50%' } 
+            // Flex-start aligns it left, leaving right side empty
+          ]
+        },
+        // Row 2: Desert (Full Width)
+        { name: 'img-sq-16-desert-184x160' },
+        
+        // Row 3: Astronaut + Crown (50/50)
+        { 
+          type: 'row',
+          items: [
+            { name: 'img-sq-17-astronaut-88x88', width: '50%' },
+            { name: 'img-sq-18-crown-88x88', width: '50%' }
+          ]
+        },
+        
+        // Row 4: Tunnel (Full Width)
+        { name: 'img-sq-19-tunnel-190x160' }
+      ]
+    }
   ];
 
-  return (
-    <div ref={containerRef} className="relative w-full h-full min-h-[700px] lg:min-h-[800px] overflow-visible">
-      {/* Collage Items */}
-      <div className="absolute inset-0" style={{ zIndex: 1 }}>
-        {collageItems.map((item, index) => {
-          const parsed = parseImageName(item.name);
-          if (!parsed) return null;
-          
-          const { width, height, isCrown } = parsed;
-          const aspectRatio = width / height;
-          
-          // Adjust top position for mobile (compress arc to top) vs desktop (full arc)
-          // On mobile, scale the top values to be in the top 60% of container
-          // On desktop, use full range
-          const mobileTop = (item.pos.top / 100) * 60; // Compress to top 60%
-          const desktopTop = item.pos.top;
-          
-          return (
-            <div
-              key={item.name}
-              className={`absolute rounded-2xl overflow-hidden collage-item ${
-                isCrown ? 'crown-card' : ''
-              }`}
-              style={{
-                '--mobile-top': `${mobileTop}%`,
-                '--desktop-top': `${desktopTop}%`,
-                left: `${item.pos.left}%`,
-                top: `var(--mobile-top)`,
-                height: `${item.pos.height}%`,
-                aspectRatio: aspectRatio,
-                zIndex: isCrown ? 10 : 5,
-                opacity: isVisible ? 1 : 0,
-                transition: 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-              } as React.CSSProperties}
-            >
-              <img
-                src={`/${item.name}.png`}
-                alt={parsed.subject}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          );
-        })}
+  // Helper function to get the file extension based on image name
+  const getImageExtension = (imageName: string, isCrown: boolean): string => {
+    if (isCrown) {
+      // Special cases for crown images with different SVG filenames
+      if (imageName === 'img-sq-15-crown-112x112') return '.svg'; // Uses img-sq-15-crown-120x120.svg
+      if (imageName === 'img-sq-18-crown-88x88') return '.svg'; // Uses img-sq-18-crown-96x96.svg
+      // All other crown images use SVG
+      return '.svg';
+    }
+    return '.png';
+  };
+
+  // Helper function to get the actual filename (handles special crown cases)
+  const getImageFilename = (imageName: string, isCrown: boolean): string => {
+    if (isCrown) {
+      if (imageName === 'img-sq-15-crown-112x112') return 'img-sq-15-crown-120x120';
+      if (imageName === 'img-sq-18-crown-88x88') return 'img-sq-18-crown-96x96';
+    }
+    return imageName;
+  };
+
+  const renderItem = (item: any, columnWidth: string) => {
+    if (item.type === 'row') {
+      // Check if this row contains the femmes image (should align right)
+      const containsFemmes = item.items.some((i: any) => i.name === 'img-sq-8-femmes-184x160');
+      const rowClass = containsFemmes ? 'hero-collage-row-right' : 'hero-collage-row';
+      return (
+        <div key={`row-${item.items.map((i: any) => i.name).join('-')}`} className={rowClass}>
+          {item.items.map((rowItem: any) => {
+            const parsed = parseImageName(rowItem.name);
+            if (!parsed) return null;
+            
+            const aspectRatio = parsed.width / parsed.height;
+            const filename = getImageFilename(rowItem.name, parsed.isCrown);
+            const extension = getImageExtension(rowItem.name, parsed.isCrown);
+            const itemClass = parsed.isCrown ? 'hero-collage-item hero-collage-item-crown' : 'hero-collage-item';
+            
+            return (
+              <div
+                key={rowItem.name}
+                className={itemClass}
+                style={{
+                  width: rowItem.width || '100%',
+                  aspectRatio: aspectRatio,
+                  opacity: isVisible ? 1 : 0,
+                  transition: 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s ease-out',
+                }}
+              >
+                <img
+                  src={`/${filename}${extension}`}
+                  alt={parsed.subject}
+                  className="hero-collage-image"
+                  loading="lazy"
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    // Single item
+    const parsed = parseImageName(item.name);
+    if (!parsed) return null;
+    
+    const isDesert = item.name === 'img-sq-16-desert-184x160';
+    const aspectRatio = `${parsed.width} / ${parsed.height}`;
+    const filename = getImageFilename(item.name, parsed.isCrown);
+    const extension = getImageExtension(item.name, parsed.isCrown);
+    const itemClass = isDesert 
+      ? 'hero-collage-item-desert' 
+      : parsed.isCrown 
+        ? 'hero-collage-item hero-collage-item-crown' 
+        : 'hero-collage-item';
+    
+    return (
+      <div
+        key={item.name}
+        className={itemClass}
+        style={{
+          ...(isDesert ? { height: 'auto' } : { aspectRatio: aspectRatio }),
+          zIndex: parsed.isCrown ? 10 : 5,
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s ease-out',
+          flexShrink: 0,
+        }}
+      >
+        <img
+          src={`/${filename}${extension}`}
+          alt={parsed.subject}
+          className={isDesert ? "hero-collage-image-desert" : "hero-collage-image"}
+          loading="lazy"
+        />
       </div>
+    );
+  };
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="hero-collage-container"
+    >
+      {columns.map((column) => (
+        <div
+          key={column.id}
+          className="hero-collage-column"
+          style={{
+            left: column.pos.left,
+            top: column.pos.top,
+            width: column.pos.width,
+          }}
+        >
+          {column.items.map((item) => renderItem(item, column.pos.width))}
+        </div>
+      ))}
     </div>
   );
 };
 
 export default HeroCollage;
-

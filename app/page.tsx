@@ -305,10 +305,10 @@ const App = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 40);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     // Check initial scroll position
     handleScroll();
 
@@ -316,7 +316,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full relative overflow-hidden" style={{ backgroundColor: '#010101' }}>
+    <div className="min-h-screen w-full relative overflow-x-hidden" style={{ backgroundColor: '#010101' }}>
       {/* Global Background Gradients */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden hidden">
         <div className="gradient-blob blob-blue w-[500px] h-[500px] top-[-10%] left-[-10%] opacity-10"></div>
@@ -326,87 +326,179 @@ const App = () => {
 
       {/* Navigation */}
       <nav 
-        className={`fixed top-0 w-full z-50 px-6 py-4 transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed w-full z-50 transition-all duration-300 ease-in-out ${
+          isScrolled ? 'top-[40px]' : 'top-[32px]'
+        }`}
       >
-        <div className="max-w-7xl mx-auto glass-panel rounded-full px-6 py-3 flex justify-between items-center shadow-sm">
-          <img 
-            src="/VN-Logo-White.svg" 
-            alt="VN Logo" 
-            style={{ 
-              height: '40px',
-              display: 'block'
-            }}
-          />
+        <div className={`px-6 mx-auto transition-all duration-300 ease-in-out ${
+          isScrolled ? 'max-w-[68rem]' : 'max-w-7xl'
+        }`}>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex relative">
+            {/* Pill Background - Only visible when scrolled */}
+            <div 
+              className={`absolute inset-0 rounded-full px-4 backdrop-blur-md transition-opacity duration-300 ease-in-out ${
+                isScrolled ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                background: 'rgba(0, 0, 0, 0.2)',
+                border: '1px solid rgba(167, 167, 167, 0.4)',
+              }}
+            />
+            
+            {/* Content Container */}
+            <div 
+              className={`relative w-full flex justify-between items-center transition-all duration-300 ease-in-out ${
+                isScrolled ? 'pl-6 pr-4' : 'px-0'
+              }`}
+              style={{ height: '64px' }}
+            >
+              {/* Logo */}
+              <img 
+                src="/VN-Logo-White.svg" 
+                alt="VN Logo" 
+                style={{ 
+                  maxHeight: '40px',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-200">
-            <button onClick={() => scrollTo('features')} className="hover:text-white transition-colors">Solutions</button>
-            <button onClick={() => scrollTo('mission')} className="hover:text-white transition-colors">Features</button>
-            <button onClick={() => scrollTo('pricing')} className="hover:text-white transition-colors">Industry</button>
+              {/* Center Links */}
+              <div className="flex items-center gap-12">
+                <button 
+                  onClick={() => scrollTo('features')} 
+                  className="font-mono-brand text-sm text-white font-normal hover:opacity-80 transition-opacity"
+                  style={{ fontFamily: 'var(--font-mono)' }}
+                >
+                  Solution
+                </button>
+                <button 
+                  onClick={() => scrollTo('quote')} 
+                  className="font-mono-brand text-sm text-white font-normal hover:opacity-80 transition-opacity"
+                  style={{ fontFamily: 'var(--font-mono)' }}
+                >
+                  Impact
+                </button>
+                <button 
+                  onClick={() => scrollTo('product-features')} 
+                  className="font-mono-brand text-sm text-white font-normal hover:opacity-80 transition-opacity"
+                  style={{ fontFamily: 'var(--font-mono)' }}
+                >
+                  Features
+                </button>
+              </div>
+
+              {/* CTA Button */}
+              <button 
+                onClick={() => scrollTo('waitlist')}
+                className="font-mono-brand bg-white text-black px-5 rounded-full text-xs hover:bg-[var(--color-blue)] hover:text-white transition-colors"
+                style={{ height: '40px' }}
+              >
+                JOIN WAITLIST
+              </button>
+            </div>
           </div>
 
-          <div className="hidden md:block">
-             <button 
-               onClick={() => scrollTo('waitlist')}
-               className="font-mono-brand bg-white text-black px-5 py-2 rounded-full text-xs hover:bg-[var(--color-blue)] hover:text-white transition-colors"
-             >
-               JOIN WAITLIST
-             </button>
-          </div>
+          {/* Mobile Navigation */}
+          <div className="md:hidden">
+            <div 
+              className="rounded-full px-4 backdrop-blur-md flex justify-between items-center"
+              style={{
+                background: 'rgba(0, 0, 0, 0.2)',
+                border: '1px solid rgba(167, 167, 167, 0.4)',
+                height: '56px'
+              }}
+            >
+              <img 
+                src="/VN-Logo-White.svg" 
+                alt="VN Logo" 
+                style={{ 
+                  maxHeight: '32px',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
 
-          <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X /> : <Menu />}
-          </button>
+              <button 
+                className="text-white" 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+
+            {/* Mobile Dropdown Menu */}
+            {isMenuOpen && (
+              <div 
+                className="absolute top-16 left-6 right-6 rounded-3xl p-6 flex flex-col gap-4 backdrop-blur-md shadow-2xl"
+                style={{
+                  background: 'rgba(0, 0, 0, 0.2)',
+                  border: '1px solid rgba(167, 167, 167, 0.4)'
+                }}
+              >
+                <button 
+                  onClick={() => scrollTo('features')} 
+                  className="text-left text-lg font-mono-brand text-white hover:opacity-80 transition-opacity"
+                >
+                  Solution
+                </button>
+                <button 
+                  onClick={() => scrollTo('quote')} 
+                  className="text-left text-lg font-mono-brand text-white hover:opacity-80 transition-opacity"
+                >
+                  Impact
+                </button>
+                <button 
+                  onClick={() => scrollTo('product-features')} 
+                  className="text-left text-lg font-mono-brand text-white hover:opacity-80 transition-opacity"
+                >
+                  Features
+                </button>
+                <button 
+                  onClick={() => scrollTo('waitlist')} 
+                  className="w-full py-4 bg-white text-black font-mono-brand rounded-xl hover:bg-[var(--color-blue)] hover:text-white transition-colors"
+                >
+                  JOIN WAITLIST
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-
-        {/* Mobile Nav */}
-        {isMenuOpen && (
-          <div className="absolute top-24 left-6 right-6 glass-panel rounded-3xl p-6 flex flex-col gap-4 md:hidden shadow-2xl">
-            <button onClick={() => scrollTo('features')} className="text-left text-lg font-semibold text-white">Solutions</button>
-            <button onClick={() => scrollTo('mission')} className="text-left text-lg font-semibold text-white">Mission</button>
-            <button onClick={() => scrollTo('waitlist')} className="w-full py-4 bg-white text-black font-mono-brand rounded-xl">JOIN WAITLIST</button>
-          </div>
-        )}
       </nav>
 
+      {/* Hero Gradient - Fixed background, positioned at root level */}
+      <img 
+        src="/hero-gradient.svg" 
+        alt="" 
+        className="hero-gradient-responsive"
+      />
+      
       {/* Hero Section */}
-      <header id="home" className="pt-40 pb-20 px-6 max-w-7xl mx-auto relative min-h-[800px] lg:min-h-[900px]">
-        {/* Full-width gradient background - breaks out of container */}
-        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen overflow-visible" style={{ zIndex: 0 }}>
-          {/* Full-width gradient - 30% larger */}
-          <img 
-            src="/hero-gradient.svg" 
-            alt="" 
-            style={{ 
-              position: 'absolute',
-              objectFit: 'cover',
-              objectPosition: 'center right',
-              width: '130%',
-              height: '130%',
-              top: '-15%',
-              left: '5%',
-              right: 'auto',
-              bottom: 'auto'
-            }}
-          />
-          {/* Collage items positioned on the right */}
-          <div className="absolute inset-0 right-0 lg:left-[calc(40%+2rem)] xl:left-[calc(35%+2rem)] overflow-visible">
-            <HeroCollage />
-          </div>
+      <header id="home" className="hero-section">
+        {/* Collage items positioned on the right - Desktop only - OVERLAPS gradient */}
+        <div className="hero-collage-wrapper-desktop">
+          <HeroCollage />
         </div>
 
-        {/* Text Content - On top */}
-        <div className="relative z-10 max-w-2xl lg:max-w-4xl lg:pr-8">
+        {/* Mobile: Hero Collage First - positioned absolutely to not affect gradient - OVERLAPS gradient */}
+        <div className="hero-collage-wrapper-mobile">
+          <HeroCollage />
+        </div>
+
+        {/* Text Content - Below collage, constrained to avoid overlap */}
+        <div className="hero-text-content">
           <SequentialReveal>
-            <h1 className="text-5xl lg:text-6xl font-normal leading-[1.1] mb-8 mt-8 text-white">
+            <h1 className="hero-heading">
               Your IP is Fueling the AI Boom. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-blue)] to-[var(--color-purple)]">
                 It's Time You Got Paid For It.
               </span>
             </h1>
-            <p className="text-lg mb-10 max-w-md leading-relaxed" style={{ color: '#B8B8B8' }}>
-              From lawsuits to licensing deals, we ensure your life's work remains yours. Take back control of your digital future.
+            <p className="hero-paragraph">
+            From training data through generated output, we ensure your IP is protected, authorized, and monetized. Take control of how AI uses your work.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="hero-button-wrapper">
               <GradientBtn onClick={() => scrollTo('waitlist')}>
                 JOIN THE WAITLIST <ArrowRight size={16} />
               </GradientBtn>
@@ -417,15 +509,6 @@ const App = () => {
 
       {/* Value Props / "Complete Solution" */}
       <section id="features" className="py-32 px-6 relative">
-        {/* Dark gradient background - full width */}
-        <div 
-          className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(1, 1, 1, 0) 0%, rgba(1, 1, 1, 1) 100%)',
-            zIndex: -5
-          }}
-        ></div>
-
         <div className="max-w-7xl mx-auto relative z-10">
           <Reveal triggerAt="twoThirds">
             <div className="mb-20">
@@ -473,6 +556,7 @@ const App = () => {
 
       {/* Quote Section */}
       <section 
+        id="quote"
         className="py-24 px-6 max-w-5xl mx-auto text-center relative"
         style={{
           backgroundImage: 'url(/quote-background.png)',
@@ -528,7 +612,7 @@ const App = () => {
       </section>
 
       {/* Feature Grid (Bento Box Style) */}
-      <section className="py-32 px-6 relative" style={{ backgroundColor: '#010101' }}>
+      <section id="product-features" className="py-32 px-6 relative" style={{ backgroundColor: '#010101' }}>
         {/* Gradient Streak Background - starts 3/4 down and spans into waitlist section */}
         <div 
           className="absolute left-0 right-0 w-full pointer-events-none overflow-visible"
